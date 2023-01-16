@@ -15,18 +15,19 @@ public class StudentDaoListImpl implements StudentDao {
    @Override
    public Student save(Student student) {
       if(student== null)throw new IllegalArgumentException("Student was null");
-      student.setId(student.getId());
+      //student.setId(student.getId());
+      students.add(student);
 
       return student;
    }
    @Override
    public Student find(int id) {
       if(id == 0) throw new IllegalArgumentException("Id was null");
-      for (Student student: students ){
-         if(student.getId()!= 0 && student.getId() == id);
-         return student;
-      }
-      return null;
+      Optional<Student> optionalStudent = students.stream()
+              .filter(student1 -> student1.getId() == id)
+              .findFirst();
+      return optionalStudent.orElse(null);
+
    }
 
    public List<Student> findAll() {
@@ -35,7 +36,9 @@ public class StudentDaoListImpl implements StudentDao {
 
    public void delete(int id) {
       if(id == 0) throw new IllegalArgumentException("Id was null");
-      students.remove(id);
+      Student studentToFind = find(id);
+      if(studentToFind == null)throw new IllegalArgumentException("Student nor found");
+      students.remove(studentToFind);
 
    }
 }

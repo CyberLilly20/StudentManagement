@@ -42,6 +42,7 @@ public class StudentManagementConsoleImpl implements StudentManagement {
 
     public Student find(int id) {
         if (id == 0) throw new IllegalArgumentException("id was null");
+
         return studentDao.find(id);
 
 
@@ -62,8 +63,14 @@ public class StudentManagementConsoleImpl implements StudentManagement {
 
     public Student edit(Student student) {
         if(student == null) throw new IllegalArgumentException("Data not found!");
-        //todo: not done
+        Student studentToFind = find(student.getId());
+        if(studentToFind == null) throw new IllegalArgumentException("Student not found");
+        System.out.println("Enter new name to add: ");
+        String newName = userInputService.getString();
+        studentToFind.setName(newName);
+        studentDao.delete(studentToFind.getId());
+        return studentDao.save(studentToFind);
 
-        return studentDao.save(student);
+
     }
 }

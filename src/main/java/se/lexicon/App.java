@@ -7,6 +7,8 @@ import se.lexicon.models.Student;
 import se.lexicon.service.impl.StudentManagementConsoleImpl;
 import se.lexicon.util.UserInputService;
 
+import java.util.Scanner;
+
 /**
  * Hello world!
  *
@@ -22,6 +24,9 @@ public class App
 
         Student createdStudent = studentManagementConsole.create();
         System.out.println(studentManagementConsole.save(createdStudent));
+        System.out.println(studentManagementConsole.find(createdStudent.getId()).getId());
+        System.out.println("-----------------------------------------");
+        System.out.println(studentManagementConsole.edit(createdStudent));
 
 
     }
